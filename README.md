@@ -323,3 +323,57 @@ JVM的永久代中会发生垃圾回收么？
 finalize()方法什么时候被调用？析构函数(finalization)的目的是什么？
 垃圾回收器(garbage collector)决定回收某对象时，就会运行该对象的finalize()方法 但是在Java中很不幸，如果内存总是充足的，那么垃圾回收可能永远不会进行，也就是说filalize()可能永远不被执行，显然指望它做收尾工作是靠不住的。 那么finalize()究竟是做什么的呢？它最主要的用途是回收特殊渠道申请的内存。Java程序有垃圾回收器，所以一般情况下内存问题不用程序员操心。但有一种JNI(Java Native Interface)调用non-Java程序（C或C++），finalize()的工作就是回收这部分的内存。
 
+
+<hr>
+
+<h1>J2EE</h1>
+
+1.BeanFactory和ApplicationContext（spring的核心容器）
+
+ApplicationContext是BeanFactory的子类，因为古老的BeanFactory无法满足不断更新的spring的需求，于是ApplicationContext就基本上代替了BeanFactory的工作，以一种更面向框架的工作方式以及对上下文进行分层和实现继承，并在这个基础上对功能进行扩展：
+<1>MessageSource, 提供国际化的消息访问
+<2>资源访问（如URL和文件）
+<3>事件传递
+<4>Bean的自动装配
+<5>各种不同应用层的Context实现
+
+区别：
+
+<1>如果使用ApplicationContext，如果配置的bean是singleton，那么不管你有没有或想不想用它，它都会被实例化。好处是可以预先加载，坏处是浪费内存。
+<2>BeanFactory，当使用BeanFactory实例化对象时，配置的bean不会马上被实例化，而是等到你使用该bean的时候（getBean）才会被实例化。好处是节约内存，坏处是速度比较慢。多用于移动设备的开发。
+<3>没有特殊要求的情况下，应该使用ApplicationContext完成。因为BeanFactory能完成的事情，ApplicationContext都能完成，并且提供了更多接近现在开发的功能。
+
+2.IoC和DI
+
+IoC叫控制反转，是Inversion of Control的缩写，DI（Dependency Injection）叫依赖注入
+依赖注入实际上就是向本来由代码控制的组件交给外部容器控制
+注入方式有setter注入（实际开发中应该使用的），构造器注入，接口注入
+
+3.Spring中的注解
+• @Component: 可以使用此注解描述 Spring 中的 Bean ，但它是一个泛化的概念，仅仅表
+示一个组件 (Bean ，并且可以作用在任何层次 使用时只需将该注解标注在相应类上即可
+• @Repository: 用于将数据访问层( DAO 层)的类标识为 Spring 中的 Bean ，其功能与
+@Component 相同
+• @Service: 通常作用在业务层( Service ，用于将业务层的类标识为 Spring 中的 Bean
+其功能与@Component 相同
+• @Controller: 通常作用在控制层(如 Spring MVC Controller ，用于将控制层的类标识
+Spring 中的 Bean ，其功能与@Component 相同
+• @Autowired: 用于对 Bean 的属性变量、属性的 setter 方法及构造方法进行标注，配合对
+应的注解处理器完成 Bean 的自动配置工作 默认按照 Bean 的类型进行装配
+• @Resource: 其作用与 Autowired 一样 其区别在于@Autowired 默认按照 Bean 类型装
+配，而@Resource 默认按照 Bean 实例名称进行装配 @Resource 中有两个重要属性: name
+type Spring name 属性解析为 Bean 实例名称， type 属性解析为 Bean 实例类型 如果
+指定 name 属性，贝IJ 按实例名称进行装配;如果指定 type 属性，则按 Bean 类型进行装配;如
+果都不指定，则先按 Bean 实例名称装配，如果不能匹配，再按照 Bean 类型进行装自己;如果都
+无法匹配，则抛出 NoSuchBeanDefinitionException 异常
+• @Qualifier: @Autowired 注解配合使用，会将默认的按 Bean 类型装配修改为接 Bean
+的实例名称装配， Bean 的实例名称由 @Qualifier 注解的参数指定
+在上面几个注解中，虽然@Repository @Service @Controller 功能与@Component 注解
+的功能相同，但为了使标注类本身用途更加清晰，建议在实际开发中使用@Repository @Service
+@Controller 分别对实现类进行标注
+
+4.Spring AOP
+
+AOP 的全称是 Aspect-Oriented Programming ，即面向切面编程(也称面向方面编程)
+是面向对象编程 (OOP) 的一种补充
+
