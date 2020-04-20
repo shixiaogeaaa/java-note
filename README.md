@@ -377,3 +377,18 @@ type Spring name 属性解析为 Bean 实例名称， type 属性解析为 Bean 
 AOP 的全称是 Aspect-Oriented Programming ，即面向切面编程(也称面向方面编程)
 是面向对象编程 (OOP) 的一种补充
 
+<hr>
+SpringMVC的工作流程
+
+!)用户通过客户端向服务器发送请求，请求被DispatcherServlet（前端控制器）拦截
+2）DispatcherServerlet(前端控制器)调用HandlerMapping(处理器映射器)
+3)HandlerMapping根据请求URL找到相应的处理器，生成处理器对象和处理器拦截器，并返回给DispatcherServerlet
+4)DispatcherMapping根据返回信息找到合适的的 HandlerAdapter (处理器适配器)
+5）HandlerAdapter（处理器适配器）调用并执行Handler（处理器），也就是Controller类，也称为后端控制器
+6）Controller类执行完，返回一个ModelAndView对象，包含模型和视图名
+7）HandlerAdapter返回ModelAndView对象
+8）DispatcherServerlet根据ModelAndView对象找到合适的ViewResolver（视图解析器）
+9）ViewResoler解析后向DiapatcherServerlet返回具体的View（视图）
+10）DispatcherServerlet对View视图进行渲染
+11）结果返回客户端
+
