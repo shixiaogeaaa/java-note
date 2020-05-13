@@ -378,17 +378,61 @@ AOP 的全称是 Aspect-Oriented Programming ，即面向切面编程(也称面�
 是面向对象编程 (OOP) 的一种补充
 
 <hr>
-SpringMVC的工作流程
+<h6>SpringMVC的工作流程</h6><br>
 
-!)用户通过客户端向服务器发送请求，请求被DispatcherServlet（前端控制器）拦截
-2）DispatcherServerlet(前端控制器)调用HandlerMapping(处理器映射器)
-3)HandlerMapping根据请求URL找到相应的处理器，生成处理器对象和处理器拦截器，并返回给DispatcherServerlet
-4)DispatcherMapping根据返回信息找到合适的的 HandlerAdapter (处理器适配器)
-5）HandlerAdapter（处理器适配器）调用并执行Handler（处理器），也就是Controller类，也称为后端控制器
-6）Controller类执行完，返回一个ModelAndView对象，包含模型和视图名
-7）HandlerAdapter返回ModelAndView对象
-8）DispatcherServerlet根据ModelAndView对象找到合适的ViewResolver（视图解析器）
-9）ViewResoler解析后向DiapatcherServerlet返回具体的View（视图）
-10）DispatcherServerlet对View视图进行渲染
-11）结果返回客户端
+1)用户通过客户端向服务器发送请求，请求被DispatcherServlet（前端控制器）拦截<br>
+2）DispatcherServerlet(前端控制器)调用HandlerMapping(处理器映射器)<br>
+3)HandlerMapping根据请求URL找到相应的处理器，生成处理器对象和处理器拦截器，并返回给DispatcherServerlet<br>
+4)DispatcherMapping根据返回信息找到合适的的 HandlerAdapter (处理器适配器)<br>
+5）HandlerAdapter（处理器适配器）调用并执行Handler（处理器），也就是Controller类，也称为后端控制器<br>
+6）Controller类执行完，返回一个ModelAndView对象，包含模型和视图名<br>
+7）HandlerAdapter返回ModelAndView对象<br>
+8）DispatcherServerlet根据ModelAndView对象找到合适的ViewResolver（视图解析器）<br>
+9）ViewResoler解析后向DiapatcherServerlet返回具体的View（视图）<br>
+10）DispatcherServerlet对View视图进行渲染<br>
+11）结果返回客户端<br>
+<hr>
+<h3>设计模式</h3>
+
+<h6>单例模式（创建型）</h6>
+这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。<br>
+
+注意：
+
+    1、单例类只能有一个实例。
+    2、单例类必须自己创建自己的唯一实例。
+    3、单例类必须给所有其他对象提供这一实例。
+
+实现方式有：<br>
+线程不安全懒汉单例<br>
+线程安全懒汉单例（支持多线程，但加了锁效率会下降）<br>
+饿汉式（支持多线程，没有加锁效率会提高，但没执行就初始化，浪费内存）<br>
+
+<h6>代理模式（结构型）</h6>
+在代理模式中创建一个具有现有对象的对象，一遍对外界提供接口<br>
+优点：职责清晰，高扩展性，智能化<br>
+缺点：客户与真实对象之间增加了新的对象，可能会造成请求的处理速度变慢；实现代理需要额外的工作<br>
+实例：windows的快捷方式<br>
+代理模式的实现方式：<br>
+静态代理、动态代理（不用创建代理类，创建动态处理器，需要实现接口）、CGLIB代理
+
+<h6>装饰模式（结构型）</h6>
+这种模式创建了一个装饰类，用来包装原有的类，并在保持类方法签名完整性的前提下，提供了额外的功能。<br>
+优点：装饰类和被装饰类可以独立发展，不会相互耦合，装饰模式是继承的一个替代模式，装饰模式可以动态扩展一个实现类的功能。<br>
+缺点：多层装饰比较复杂<br>
+使用场景： 1、扩展一个类的功能。 2、动态增加功能，动态撤销
+
+<h6>适配器模式（结构型）</h6>
+适配器模式（Adapter Pattern）是作为两个不兼容的接口之间的桥梁。这种类型的设计模式属于结构型模式，它结合了两个独立接口的功能。
+这种模式涉及到一个单一的类，该类负责加入独立的或不兼容的接口功能。<br>
+优点： 1、可以让任何两个没有关联的类一起运行。 2、提高了类的复用。 3、增加了类的透明度。 4、灵活性好。<br>
+缺点： 1、过多地使用适配器，会让系统非常零乱，不易整体进行把握。比如，明明看到调用的是 A 接口，其实内部被适配成了 B 接口的实现，一个系统如果太多出现这种情况，无异于一场灾难。因此如果不是很有必要，可以不使用适配器，而是直接对系统进行重构。 2.由于 JAVA 至多继承一个类，所以至多只能适配一个适配者类，而且目标类必须是抽象类。 <br>
+
+注意：Java IO中使用了装饰模式和适配器模式<br>
+
+
+<h6>策略模式（行为型）</h6>
+<h6>观察者模式（行为型）</h6>
+
+
 
